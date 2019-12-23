@@ -25,7 +25,6 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: CI test windows py${{ matrix.python-version }}
         run: |
-          set -x -e
           python -m pip install wheel setuptools
           python --version
           wget --quiet -nc https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-windows-x86_64.exe
