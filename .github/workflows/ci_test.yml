@@ -1,0 +1,32 @@
+name: GitHub CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+  BAZEL_VERSION: 1.1.0
+
+jobs:
+  macos-test:
+    name: Test PR on windows
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        python-version: ['3.7']
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: CI test windows py${{ matrix.python-version }}
+        run: |
+          set -x -e
+          python -m pip install wheel setuptools
+          python --version
+          wget --quiet -nc https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-windows-x86_64.exe
+          bash -x -e tools/ci_testing/addons_cpu.sh
