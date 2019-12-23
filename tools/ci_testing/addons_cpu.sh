@@ -15,13 +15,13 @@
 #
 # ==============================================================================
 # Make sure we're in the project root path.
-SCRIPT_DIR=$( cd ${0%/*} && pwd -P )
-ROOT_DIR=$( cd "$SCRIPT_DIR/../.." && pwd -P )
-cd $ROOT_DIR
-if [[ ! -d "tensorflow_addons" ]]; then
-    echo "ERROR: PWD: $PWD is not project root"
-    exit 1
-fi
+#SCRIPT_DIR=$( cd ${0%/*} && pwd -P )
+#ROOT_DIR=$( cd "$SCRIPT_DIR/../.." && pwd -P )
+#cd $ROOT_DIR
+#if [[ ! -d "tensorflow_addons" ]]; then
+#    echo "ERROR: PWD: $PWD is not project root"
+#    exit 1
+#fi
 
 set -x
 
