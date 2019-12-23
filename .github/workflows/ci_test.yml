@@ -27,5 +27,4 @@ jobs:
         run: |
           python -m pip install wheel setuptools
           python --version
-#          curl https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-windows-x86_64.exe -O bazel.exe
           bash -x -e tools/ci_testing/addons_cpu.sh
