@@ -23,21 +23,21 @@
 #    exit 1
 #fi
 
-#set -x
-#
-#PLATFORM="$(uname -s | tr 'A-Z' 'a-z')"
-#
-#if [[ ${PLATFORM} == "darwin" ]]; then
-#    N_JOBS=$(sysctl -n hw.ncpu)
-#else
-#    N_JOBS=$(grep -c ^processor /proc/cpuinfo)
-#fi
-#
-#
-#echo ""
-#echo "Bazel will use ${N_JOBS} concurrent job(s)."
-#echo ""
-#
+set -x
+
+PLATFORM="$(uname -s | tr 'A-Z' 'a-z')"
+
+if [[ ${PLATFORM} == "darwin" ]]; then
+    N_JOBS=$(sysctl -n hw.ncpu)
+else
+    N_JOBS=$(grep -c ^processor /proc/cpuinfo)
+fi
+
+
+echo ""
+echo "Bazel will use ${N_JOBS} concurrent job(s)."
+echo ""
+
 #export CC_OPT_FLAGS='-mavx'
 #export TF_NEED_CUDA=0
 #
@@ -56,5 +56,4 @@
 #exit $?
 
 
-echo "In script..."
 exit 0
