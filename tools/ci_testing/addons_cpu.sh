@@ -57,3 +57,4 @@
 
 
 echo "In script..."
+exit 0
