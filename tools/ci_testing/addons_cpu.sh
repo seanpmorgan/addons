@@ -57,4 +57,3 @@
 
 
 echo "In script..."
-ls -al ./
