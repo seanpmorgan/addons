@@ -27,4 +27,4 @@ jobs:
         run: |
           python -m pip install wheel setuptools
           python --version
-          bash -x -e tools/ci_testing/addons_cpu.sh
+          bash tools/ci_testing/addons_cpu.sh
