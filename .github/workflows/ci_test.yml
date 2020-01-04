@@ -24,7 +24,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: CI test windows py${{ matrix.python-version }}
+        uses: numworks/setup-msys2@v1
         run: |
           python -m pip install wheel setuptools
           python --version
-          bash tools/ci_testing/addons_cpu.sh
+          msys2do tools/ci_testing/addons_cpu.sh
