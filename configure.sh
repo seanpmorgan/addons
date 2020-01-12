@@ -102,6 +102,7 @@ else
   echo "> Using pre-installed ${REQUIRED_PKG}..."
 fi
 
+
 [[ -f .bazelrc ]] && rm .bazelrc
 
 TF_CFLAGS=($(python -c 'import logging; logging.disable(logging.WARNING);import tensorflow as tf; print(" ".join(tf.sysconfig.get_compile_flags()))'))
