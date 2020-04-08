@@ -1,18 +1,9 @@
 name: addons-release
 
 on:
-  release:
-    types: [published]
-    tags:
-      - v*
   push:
     branches:
-      - master
-      - r*
-  pull_request:
-    branches:
-      - master
-      - r*
+      - pypi-test
 
 env:
   BAZEL_VERSION: 1.1.0
@@ -43,8 +34,6 @@ jobs:
         tf-version: ['2.1.0', '2.2.0rc2']
       fail-fast: false
     steps:
-      - if: github.event_name == 'push'
-        run: echo "::set-env name=NIGHTLY_FLAG::--nightly"
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
         with:
@@ -128,7 +117,8 @@ jobs:
           ls -la dist/
           sha256sum dist/*.whl
       - uses: pypa/gh-action-pypi-publish@v1.1.0
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/master') || github.event_name == 'release'
+        if: github.event_name == 'push'
         with:
           user: __token__
-          password: ${{ secrets.pypi_token }}
+          password: ${{ secrets.pypi_test_token }}
+          repository_url: https://test.pypi.org/legacy/
