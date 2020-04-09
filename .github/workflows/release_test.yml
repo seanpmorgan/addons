@@ -45,7 +45,7 @@ jobs:
           && (matrix.os != 'ubuntu-18.04' || matrix.tf-version != '2.2.0rc2')
           && (github.event_name != 'pull_request' || matrix.py-version == env.OLDEST_PY_VERSION)
         env:
-          OS: ${{ matrix.os }}
+          OS: ${{ runner.os }}
           PY_VERSION: ${{ matrix.py-version }}
           TF_VERSION: ${{ matrix.tf-version }}
         shell: bash
@@ -57,7 +57,7 @@ jobs:
           && (matrix.os != 'ubuntu-18.04' || matrix.tf-version != '2.2.0rc2')
           && (github.event_name != 'pull_request' || matrix.py-version == env.OLDEST_PY_VERSION)
         with:
-          name: ${{ matrix.os }}-${{ matrix.py-version }}-tf${{ matrix.tf-version }}-wheel
+          name: ${{ runner.os }}-${{ matrix.py-version }}-tf${{ matrix.tf-version }}-wheel
           path: wheelhouse
   test-release-wheel:
     name: Test release wheels
@@ -80,7 +80,7 @@ jobs:
           && (matrix.os != 'ubuntu-18.04' || matrix.tf-version != '2.2.0rc2')
           && (github.event_name != 'pull_request' || matrix.py-version == env.OLDEST_PY_VERSION)
         with:
-          name: ${{ matrix.os }}-${{ matrix.py-version }}-tf${{ matrix.tf-version }}-wheel
+          name: ${{ runner.os }}-${{ matrix.py-version }}-tf${{ matrix.tf-version }}-wheel
           path: ./wheel
       - name: Test wheel
         if: |
