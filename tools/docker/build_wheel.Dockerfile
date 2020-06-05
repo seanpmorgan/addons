@@ -1,9 +1,13 @@
 #syntax=docker/dockerfile:1.1.5-experimental
 ARG PY_VERSION
 ARG IMAGE_TYPE
-FROM tensorflow/tensorflow:2.1.0-custom-op$IMAGE_TYPE-ubuntu16 as base_install
-ENV TF_NEED_CUDA="1"
+ARG TF_VERSION
+FROM tensorflow/tensorflow:$TF_VERSION-custom-op$IMAGE_TYPE-ubuntu16 as base_install
 
+ARG TF_NEED_CUDA="0"
+ENV TF_NEED_CUDA=$TF_NEED_CUDA
+
+# TODO: This ENV block is useless when we build the CPU IMAGE
 # is needed because when we sqashed the image, we lost all environment variables.
 ENV NVIDIA_REQUIRE_CUDA=cuda>=10.1 brand=tesla,driver>=384,driver<385 brand=tesla,driver>=396,driver<397 brand=tesla,driver>=410,driver<411
 ENV LIBRARY_PATH=/usr/local/cuda/lib64/stubs
@@ -25,10 +29,6 @@ RUN ln -sf $(which python$PY_VERSION) /usr/bin/python
 RUN ln -sf $(which python$PY_VERSION) /usr/bin/python3
 
 RUN python -m pip install --upgrade pip==19.0 auditwheel==2.0.0
-
-ARG TF_VERSION
-ARG TF_TYPE="-cpu"
-RUN python -m pip install --default-timeout=1000 tensorflow$TF_TYPE==$TF_VERSION
 
 COPY tools/install_deps/ /install_deps
 RUN python -m pip install -r /install_deps/pytest.txt
