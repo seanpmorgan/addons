@@ -31,11 +31,13 @@ jobs:
         with:
           python-version: ${{ env.MIN_PY_VERSION }}
       - name: Build wheels
+        env:
+          TF_PYTHON_VERSION: ${{ env.MIN_PY_VERSION }}
         run: |
           pip install --default-timeout=1000 -r tools/install_deps/pytest.txt -r tools/install_deps/tensorflow-cpu.txt -r requirements.txt
           bash tools/install_deps/install_bazelisk.sh ./
           python configure.py
-          bazel test -k --test_timeout 300,450,1200,3600 --test_output=errors //tensorflow_addons/...
+          bazel test --action_env PYENV_VERSION=3.9  -k --test_timeout 300,450,1200,3600 --test_output=errors //tensorflow_addons/...
   release-wheel:
     name: Test and build release wheels
     runs-on: ${{ matrix.os }}
@@ -87,6 +89,7 @@ jobs:
         env:
           OS: ${{ runner.os }}
           PY_VERSION: ${{ matrix.py-version }}
+          TF_PYTHON_VERSION: ${{ matrix.py-version }}
           TF_VERSION: ${{ matrix.tf-version }}
           NIGHTLY_TIME: ${{ steps.author-date.outputs.result }}
           CPU: ${{ matrix.cpu }}
